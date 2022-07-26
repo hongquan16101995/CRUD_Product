@@ -26,7 +26,7 @@
             <td>${p.getId()}</td>
             <td>${p.getName()}</td>
             <td>${p.getPrice()}</td>
-            <td>${p.getImage()}</td>
+            <td><img style="width: 200px; height: 200px" src="${p.getImage()}" alt=""></td>
             <td><button><a href="/product?action=edit&id=${p.getId()}">Edit</a></button></td>
             <td><button><a href="/product?action=delete&id=${p.getId()}">Delete</a></button></td>
         </tr>

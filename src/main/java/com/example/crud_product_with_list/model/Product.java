@@ -1,8 +1,6 @@
 package com.example.crud_product_with_list.model;
 
 public class Product {
-
-    private static int INDEX = 0;
     private int id;
     private String name;
     private double price;
@@ -11,8 +9,14 @@ public class Product {
     public Product() {
     }
 
+    public Product(int id, String name, double price, String image) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.image = image;
+    }
+
     public Product(String name, double price, String image) {
-        this.id = ++INDEX;
         this.name = name;
         this.price = price;
         this.image = image;

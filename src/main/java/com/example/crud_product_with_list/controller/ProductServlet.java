@@ -1,7 +1,7 @@
 package com.example.crud_product_with_list.controller;
 
-import com.example.product.servlet_jsp.model.Product;
-import com.example.product.servlet_jsp.service.ProductServiceImpl;
+import com.example.crud_product_with_list.model.Product;
+import com.example.crud_product_with_list.service.ProductServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -32,15 +32,6 @@ public class ProductServlet extends HttpServlet {
             default:
                 displayAllProduct(request, response);
         }
-//        if (action.equals("1")) {
-//            RequestDispatcher requestDispatcher = request.getRequestDispatcher("product-request.jsp");
-//            ProductServiceImpl productService = new ProductServiceImpl();
-//            ArrayList<Product> products = productService.findAll();
-//            request.setAttribute("products", products);
-//            requestDispatcher.forward(request, response);
-//        } else {
-//            response.sendRedirect("product-response.jsp");
-//        }
     }
 
     @Override
@@ -51,7 +42,7 @@ public class ProductServlet extends HttpServlet {
                 addProduct(request, response);
                 break;
             case "edit":
-                editProductByForm(request, response);
+                editProduct(request, response);
                 break;
         }
     }
@@ -63,7 +54,7 @@ public class ProductServlet extends HttpServlet {
         return new Product(name, price, image);
     }
 
-    private void addProduct(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void addProduct(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         Product product = createProduct(request);
         productService.addProduct(product);
         response.sendRedirect("/product?action=");
@@ -76,32 +67,21 @@ public class ProductServlet extends HttpServlet {
         requestDispatcher.forward(request, response);
     }
 
-    private void displayProductById(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        Product product = productService.findProductById(id);
-    }
-
     private void deleteProductById(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
-        Product product = productService.findProductById(id);
-        productService.deleteProduct(product);
-        displayAllProduct(request, response);
+        productService.deleteProduct(id);
+        response.sendRedirect("/product?action=");
     }
 
     private void updateProductById(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         Product product = productService.findProductById(id);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("product/create.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("product/edit.jsp");
         request.setAttribute("product", product);
         requestDispatcher.forward(request, response);
     }
 
-    private void editProductByForm(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        editProduct(request);
-        response.sendRedirect("/product?action=");
-    }
-
-    private void editProduct(HttpServletRequest request) {
+    private void editProduct(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         String name = request.getParameter("name");
         double price = Double.parseDouble(request.getParameter("price"));
@@ -111,5 +91,6 @@ public class ProductServlet extends HttpServlet {
         product.setPrice(price);
         product.setImage(image);
         productService.updateProduct(product);
+        response.sendRedirect("/product?action=");
     }
 }

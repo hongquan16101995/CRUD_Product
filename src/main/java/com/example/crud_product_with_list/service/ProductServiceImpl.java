@@ -1,44 +1,39 @@
 package com.example.crud_product_with_list.service;
 
-import com.example.product.servlet_jsp.model.Product;
+import com.example.crud_product_with_list.DAO.ProductRepository;
+import com.example.crud_product_with_list.model.Product;
 
 import java.util.ArrayList;
 
 public class ProductServiceImpl implements IProductService {
-    private final ArrayList<Product> products = new ArrayList<>();
+    private final ProductRepository productRepository;
+
+    public ProductServiceImpl() {
+        productRepository = new ProductRepository();
+    }
 
     @Override
     public ArrayList<Product> findAll() {
-        return products;
+        return productRepository.findAll();
     }
 
     @Override
     public Product findProductById(int id) {
-        for (Product product : products) {
-            if (product.getId() == id) {
-                return product;
-            }
-        }
-        return null;
+        return productRepository.findProductById(id);
     }
 
     @Override
     public void addProduct(Product product) {
-        products.add(product);
+        productRepository.addProduct(product);
     }
 
     @Override
     public void updateProduct(Product product) {
-        for (int i = 0; i < products.size(); i++) {
-            if (products.get(i).getId() == product.getId()) {
-                products.set(i, product);
-                break;
-            }
-        }
+        productRepository.updateProductById(product);
     }
 
     @Override
-    public void deleteProduct(Product product) {
-        products.remove(product);
+    public void deleteProduct(int id) {
+        productRepository.deleteProductById(id);
     }
 }

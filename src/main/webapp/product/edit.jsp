@@ -12,26 +12,30 @@
     <title>Title</title>
 </head>
 <body>
-<form action="/product?action=create" method="post">
+<form action="/product?action=edit" method="post">
     <table>
         <tr>
-            <th colspan="2">Create Form product</th>
+            <th colspan="2">Edit Form product</th>
+        </tr>
+        <tr>
+            <td>Id</td>
+            <td> <input type="text" name="id" id="id" value="${product.getId()}" readonly></td>
         </tr>
         <tr>
             <td>Name</td>
-            <td><input type="text" name="name" id="name"></td>
+            <td><input type="text" name="name" id="name" value="${product.getName()}"></td>
         </tr>
         <tr>
             <td>Price</td>
-            <td><input type="text" name="price" id="price"></td>
+            <td><input type="text" name="price" id="price" value="${product.getPrice()}"></td>
         </tr>
         <tr>
             <td>Image</td>
-            <td><input type="text" name="image" id="image"></td>
+            <td><input type="text" name="image" id="image" value="${product.getImage()}"></td>
         </tr>
         <tr>
             <td colspan="2">
-                <button type="submit">Create</button>
+                <button type="submit">Edit</button>
             </td>
         </tr>
     </table>
