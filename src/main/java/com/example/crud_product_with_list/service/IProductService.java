@@ -14,4 +14,8 @@ public interface IProductService {
     void updateProduct(Product product);
 
     void deleteProduct(int id);
+
+    void updateProductsByName(String name);
+
+    void change(int id, Long price);
 }

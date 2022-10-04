@@ -1,7 +1,7 @@
 package com.example.crud_product_with_list.controller;
 
 import com.example.crud_product_with_list.model.Product;
-import com.example.crud_product_with_list.service.ProductServiceImpl;
+import com.example.crud_product_with_list.service.impl.ProductServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -20,6 +20,9 @@ public class ProductServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
+        if (action == null) {
+            action = "";
+        }
         switch (action) {
             case "detail":
                 break;
@@ -29,6 +32,12 @@ public class ProductServlet extends HttpServlet {
             case "edit":
                 updateProductById(request, response);
                 break;
+            case "name":
+                updateProductByName(request, response);
+                break;
+            case "change":
+                changePrice(request, response);
+                break;
             default:
                 displayAllProduct(request, response);
         }
@@ -37,6 +46,9 @@ public class ProductServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
+        if (action == null) {
+            action = "";
+        }
         switch (action) {
             case "create":
                 addProduct(request, response);
@@ -45,6 +57,19 @@ public class ProductServlet extends HttpServlet {
                 editProduct(request, response);
                 break;
         }
+    }
+
+    private void changePrice(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        long price = Long.parseLong(request.getParameter("price"));
+        int id = Integer.parseInt(request.getParameter("id"));
+        productService.change(id, price);
+        response.sendRedirect("/product?action=");
+    }
+
+    private void updateProductByName(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String name = request.getParameter("name_change");
+        productService.updateProductsByName(name);
+        response.sendRedirect("/product?action=");
     }
 
     private Product createProduct(HttpServletRequest request) {
@@ -57,6 +82,9 @@ public class ProductServlet extends HttpServlet {
     private void addProduct(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         Product product = createProduct(request);
         productService.addProduct(product);
+//        RequestDispatcher requestDispatcher = request.getRequestDispatcher("display.jsp");
+//        request.getSession().setAttribute("message", "test message");
+//        response.sendRedirect(request.getHeader("Referer"));
         response.sendRedirect("/product?action=");
     }
 

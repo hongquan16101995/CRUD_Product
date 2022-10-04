@@ -1,7 +1,8 @@
-package com.example.crud_product_with_list.service;
+package com.example.crud_product_with_list.service.impl;
 
 import com.example.crud_product_with_list.DAO.ProductRepository;
 import com.example.crud_product_with_list.model.Product;
+import com.example.crud_product_with_list.service.IProductService;
 
 import java.util.ArrayList;
 
@@ -35,5 +36,15 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public void deleteProduct(int id) {
         productRepository.deleteProductById(id);
+    }
+
+    @Override
+    public void updateProductsByName(String name) {
+        productRepository.updateProductByName(name);
+    }
+
+    @Override
+    public void change(int id, Long price) {
+        productRepository.changePrice(price, id);
     }
 }

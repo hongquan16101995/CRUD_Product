@@ -12,6 +12,7 @@
     <title>Title</title>
 </head>
 <body>
+<%--<h2>${message}</h2>--%>
 <form action="/product?action=create" method="post">
     <table>
         <tr>

@@ -12,7 +12,9 @@
     <title>Title</title>
 </head>
 <body>
-<a href="/product/create.jsp">Create new product</a>
+<a href="/product/create.jsp">Create new product</a><br>
+<a href="/product?action=name&name_change=a">Change all price with name contains "a"</a>
+<h2>${message}</h2>
 <table border="1" width="300px">
     <tr>
         <th>ID</th>
